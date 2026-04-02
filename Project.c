@@ -438,3 +438,99 @@ void addPatient() {
     saveData();
     pressAnyKeyToContinue();
 }
+void viewPatients() {
+    system("cls || clear");
+    printHeader("ALL PATIENTS");
+    
+    if(patientCount == 0) {
+        printf("\nNo patients found in the system.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    printf("\n%-8s %-25s %-5s %-5s %-15s %-10s\n", "ID", "Name", "Age", "Gender", "Contact", "Blood Type");
+    printf("-----------------------------------------------------------------\n");
+    
+    for(int i = 0; i < patientCount; i++) {
+        printf("%-8d %-25s %-5d %-5c %-15s %-10s\n", 
+               patients[i].id, 
+               patients[i].name, 
+               patients[i].age, 
+               patients[i].gender,
+               patients[i].contact,
+               patients[i].bloodType);
+    }
+    
+    pressAnyKeyToContinue();
+}
+
+void searchPatient() {
+    system("cls || clear");
+    printHeader("SEARCH PATIENT");
+    
+    if(patientCount == 0) {
+        printf("\nNo patients found in the system.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    int choice;
+    printf("\nSearch by:\n1. ID\n2. Name\n3. Blood Type\n4. Return\n\nEnter your choice: ");
+    scanf("%d", &choice);
+    clearInputBuffer();
+    
+    if(choice == 4) return;
+    
+    char searchTerm[50];
+    int found = 0;
+    
+    printf("\n%-8s %-25s %-5s %-5s %-15s %-10s\n", "ID", "Name", "Age", "Gender", "Contact", "Blood Type");
+    printf("-----------------------------------------------------------------\n");
+    
+    switch(choice) {
+        case 1: {
+            int id;
+            printf("\nEnter Patient ID to search: ");
+            scanf("%d", &id);
+            clearInputBuffer();
+            for(int i = 0; i < patientCount; i++) {
+                if(patients[i].id == id) {
+                    printf("%-8d %-25s %-5d %-5c %-15s %-10s\n", patients[i].id, patients[i].name, patients[i].age, patients[i].gender, patients[i].contact, patients[i].bloodType);
+                    found = 1;
+                    break;
+                }
+            }
+            break;
+        }
+        case 2:
+            printf("\nEnter Patient Name to search: ");
+            fgets(searchTerm, sizeof(searchTerm), stdin);
+            searchTerm[strcspn(searchTerm, "\n")] = '\0';
+            for(int i = 0; i < patientCount; i++) {
+                if(strstr(patients[i].name, searchTerm) != NULL) {
+                    printf("%-8d %-25s %-5d %-5c %-15s %-10s\n", patients[i].id, patients[i].name, patients[i].age, patients[i].gender, patients[i].contact, patients[i].bloodType);
+                    found = 1;
+                }
+            }
+            break;
+        case 3:
+            printf("\nEnter Blood Type to search: ");
+            fgets(searchTerm, sizeof(searchTerm), stdin);
+            searchTerm[strcspn(searchTerm, "\n")] = '\0';
+            for(int i = 0; i < patientCount; i++) {
+                if(strstr(patients[i].bloodType, searchTerm) != NULL) {
+                    printf("%-8d %-25s %-5d %-5c %-15s %-10s\n", patients[i].id, patients[i].name, patients[i].age, patients[i].gender, patients[i].contact, patients[i].bloodType);
+                    found = 1;
+                }
+            }
+            break;
+        default:
+            printf("\nInvalid choice.\n");
+            pressAnyKeyToContinue();
+            return;
+    }
+    
+    if(!found) printf("\nNo matching patients found.\n");
+    pressAnyKeyToContinue();
+}
+
