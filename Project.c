@@ -237,3 +237,27 @@ void addDoctor() {
     saveData();
     pressAnyKeyToContinue();
 }
+void viewDoctors() {
+    system("cls || clear");
+    printHeader("ALL DOCTORS");
+    
+    if(doctorCount == 0) {
+        printf("\nNo doctors found in the system.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    printf("\n%-8s %-25s %-20s %-15s %s\n", "ID", "Name", "Specialization", "Contact", "Status");
+    printf("-----------------------------------------------------------------\n");
+    
+    for(int i = 0; i < doctorCount; i++) {
+        printf("%-8d %-25s %-20s %-15s %s\n", 
+               doctors[i].id, 
+               doctors[i].name, 
+               doctors[i].specialization, 
+               doctors[i].contact,
+               doctors[i].available ? "Available" : "Not Available");
+    }
+    
+    pressAnyKeyToContinue();
+}
