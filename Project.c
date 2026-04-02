@@ -174,3 +174,31 @@ void managePatients() {
         }
     } while(choice != 5);
 }
+void manageAppointments() {
+    int choice;
+    do {
+        system("cls || clear");
+        printHeader("APPOINTMENT MANAGEMENT");
+        printf("\n1. Schedule New Appointment");
+        printf("\n2. View All Appointments");
+        printf("\n3. View Upcoming Appointments");
+        printf("\n4. Complete Appointment");
+        printf("\n5. Cancel Appointment");
+        printf("\n6. Return to Main Menu");
+        printf("\n\nEnter your choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        
+        switch(choice) {
+            case 1: scheduleAppointment(); break;
+            case 2: viewAppointments(); break;
+            case 3: displayUpcomingAppointments(); break;
+            case 4: completeAppointment(); break;
+            case 5: cancelAppointment(); break;
+            case 6: break;
+            default:
+                printf("\nInvalid choice. Please try again.\n");
+                pressAnyKeyToContinue();
+        }
+    } while(choice != 6);
+}
