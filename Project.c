@@ -261,3 +261,128 @@ void viewDoctors() {
     
     pressAnyKeyToContinue();
 }
+void searchDoctor() {
+    system("cls || clear");
+    printHeader("SEARCH DOCTOR");
+    
+    if(doctorCount == 0) {
+        printf("\nNo doctors found in the system.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    int choice;
+    printf("\nSearch by:\n1. ID\n2. Name\n3. Specialization\n4. Return\n\nEnter your choice: ");
+    scanf("%d", &choice);
+    clearInputBuffer();
+    
+    if(choice == 4) return;
+    
+    char searchTerm[50];
+    int found = 0;
+    
+    printf("\n%-8s %-25s %-20s %-15s %s\n", "ID", "Name", "Specialization", "Contact", "Status");
+    printf("-----------------------------------------------------------------\n");
+    
+    switch(choice) {
+        case 1: {
+            int id;
+            printf("\nEnter Doctor ID to search: ");
+            scanf("%d", &id);
+            clearInputBuffer();
+            for(int i = 0; i < doctorCount; i++) {
+                if(doctors[i].id == id) {
+                    printf("%-8d %-25s %-20s %-15s %s\n", doctors[i].id, doctors[i].name, doctors[i].specialization, doctors[i].contact, doctors[i].available ? "Available" : "Not Available");
+                    found = 1;
+                    break;
+                }
+            }
+            break;
+        }
+        case 2:
+            printf("\nEnter Doctor Name to search: ");
+            fgets(searchTerm, sizeof(searchTerm), stdin);
+            searchTerm[strcspn(searchTerm, "\n")] = '\0';
+            for(int i = 0; i < doctorCount; i++) {
+                if(strstr(doctors[i].name, searchTerm) != NULL) {
+                    printf("%-8d %-25s %-20s %-15s %s\n", doctors[i].id, doctors[i].name, doctors[i].specialization, doctors[i].contact, doctors[i].available ? "Available" : "Not Available");
+                    found = 1;
+                }
+            }
+            break;
+        case 3:
+            printf("\nEnter Specialization to search: ");
+            fgets(searchTerm, sizeof(searchTerm), stdin);
+            searchTerm[strcspn(searchTerm, "\n")] = '\0';
+            for(int i = 0; i < doctorCount; i++) {
+                if(strstr(doctors[i].specialization, searchTerm) != NULL) {
+                    printf("%-8d %-25s %-20s %-15s %s\n", doctors[i].id, doctors[i].name, doctors[i].specialization, doctors[i].contact, doctors[i].available ? "Available" : "Not Available");
+                    found = 1;
+                }
+            }
+            break;
+        default:
+            printf("\nInvalid choice.\n");
+            pressAnyKeyToContinue();
+            return;
+    }
+    
+    if(!found) printf("\nNo matching doctors found.\n");
+    pressAnyKeyToContinue();
+}
+
+void updateDoctor() {
+    system("cls || clear");
+    printHeader("UPDATE DOCTOR INFORMATION");
+    
+    if(doctorCount == 0) {
+        printf("\nNo doctors found in the system.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    int id;
+    printf("\nEnter Doctor ID to update: ");
+    scanf("%d", &id);
+    clearInputBuffer();
+    
+    int index = -1;
+    for(int i = 0; i < doctorCount; i++) {
+        if(doctors[i].id == id) {
+            index = i;
+            break;
+        }
+    }
+    
+    if(index == -1) {
+        printf("\nDoctor with ID %d not found.\n", id);
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    char input[100];
+    
+    printf("\nName (%s): ", doctors[index].name);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(doctors[index].name, input);
+    
+    printf("Specialization (%s): ", doctors[index].specialization);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(doctors[index].specialization, input);
+    
+    printf("Contact (%s): ", doctors[index].contact);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(doctors[index].contact, input);
+    
+    printf("Availability (1 for Available, 0 for Not Available) (%d): ", doctors[index].available);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) doctors[index].available = atoi(input);
+    
+    printf("\nDoctor information updated successfully!\n");
+    saveData();
+    pressAnyKeyToContinue();
+}
