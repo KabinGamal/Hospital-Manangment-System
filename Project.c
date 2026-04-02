@@ -533,4 +533,75 @@ void searchPatient() {
     if(!found) printf("\nNo matching patients found.\n");
     pressAnyKeyToContinue();
 }
+void updatePatient() {
+    system("cls || clear");
+    printHeader("UPDATE PATIENT INFORMATION");
+    
+    if(patientCount == 0) {
+        printf("\nNo patients found in the system.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    int id;
+    printf("\nEnter Patient ID to update: ");
+    scanf("%d", &id);
+    clearInputBuffer();
+    
+    int index = -1;
+    for(int i = 0; i < patientCount; i++) {
+        if(patients[i].id == id) {
+            index = i;
+            break;
+        }
+    }
+    
+    if(index == -1) {
+        printf("\nPatient with ID %d not found.\n", id);
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    char input[200];
+    char charInput;
+    
+    printf("\nName (%s): ", patients[index].name);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(patients[index].name, input);
+    
+    printf("Age (%d): ", patients[index].age);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) patients[index].age = atoi(input);
+    
+    printf("Gender (%c): ", patients[index].gender);
+    charInput = getchar();
+    clearInputBuffer();
+    if(charInput != '\n') patients[index].gender = toupper(charInput);
+    
+    printf("Address (%s): ", patients[index].address);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(patients[index].address, input);
+    
+    printf("Contact (%s): ", patients[index].contact);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(patients[index].contact, input);
+    
+    printf("Blood Type (%s): ", patients[index].bloodType);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(patients[index].bloodType, input);
+    
+    printf("Medical History (%s): ", patients[index].medicalHistory);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    if(strlen(input) > 0) strcpy(patients[index].medicalHistory, input);
+    
+    printf("\nPatient information updated successfully!\n");
+    saveData();
+    pressAnyKeyToContinue();
+}
 
