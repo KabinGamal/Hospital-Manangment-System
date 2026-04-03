@@ -13,12 +13,13 @@ A lightweight, console-based management system written in C to handle daily hosp
 
 -💾 Data Persistence: Automatically saves and loads data from hospital_data.dat using binary file I/O.
 
+
 🛠️ Technical Details
 
-.Language: C
+1. Language: C
 
-.Storage: Binary File Handling (.dat files)
+2. Storage: Binary File Handling (.dat files)
 
-.Data Structures: Custom struct definitions for Doctors, Patients, and Appointments.
+3. Data Structures: Custom struct definitions for Doctors, Patients, and Appointments.
 
-.UI: Interactive Command Line Interface (CLI).
+4. UI: Interactive Command Line Interface (CLI).
