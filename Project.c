@@ -662,4 +662,79 @@ void displayPatientCard(int patientId) {
     printf("  %-58s \n", patients[index].medicalHistory);
     printf("================================================================\n");
 }
+void scheduleAppointment() {
+    system("cls || clear");
+    printHeader("SCHEDULE NEW APPOINTMENT");
+    
+    if(doctorCount == 0 || patientCount == 0) {
+        printf("\nCannot schedule appointment. Need at least one doctor and one patient.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    if(appointmentCount >= 200) {
+        printf("\nMaximum number of appointments reached.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    Appointment a;
+    a.id = 3000 + appointmentCount + 1;
+    a.completed = 0;
+    
+    printf("\nAppointment ID will be automatically assigned as: %d", a.id);
+    
+    printf("\nEnter Patient ID: ");
+    scanf("%d", &a.patientId);
+    clearInputBuffer();
+    
+    int patientIndex = -1;
+    for(int i = 0; i < patientCount; i++) {
+        if(patients[i].id == a.patientId) { patientIndex = i; break; }
+    }
+    
+    if(patientIndex == -1) {
+        printf("\nInvalid Patient ID.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    printf("Enter Doctor ID: ");
+    scanf("%d", &a.doctorId);
+    clearInputBuffer();
+    
+    int doctorIndex = -1;
+    for(int i = 0; i < doctorCount; i++) {
+        if(doctors[i].id == a.doctorId) { doctorIndex = i; break; }
+    }
+    
+    if(doctorIndex == -1 || !doctors[doctorIndex].available) {
+        printf("\nInvalid Doctor ID or Doctor is not available.\n");
+        pressAnyKeyToContinue();
+        return;
+    }
+    
+    do {
+        printf("Enter Date (YYYY-MM-DD): ");
+        fgets(a.date, sizeof(a.date), stdin);
+        a.date[strcspn(a.date, "\n")] = '\0';
+    } while(!validateDate(a.date));
+    
+    do {
+        printf("Enter Time (HH:MM): ");
+        fgets(a.time, sizeof(a.time), stdin);
+        a.time[strcspn(a.time, "\n")] = '\0';
+    } while(!validateTime(a.time));
+    
+    printf("Enter Purpose: ");
+    fgets(a.purpose, sizeof(a.purpose), stdin);
+    a.purpose[strcspn(a.purpose, "\n")] = '\0';
+    
+    appointments[appointmentCount++] = a;
+    
+    printf("\nAppointment scheduled successfully!\n");
+    saveData();
+    pressAnyKeyToContinue();
+}
+
 
