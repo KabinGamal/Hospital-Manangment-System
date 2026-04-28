@@ -27,3 +27,4 @@ A lightweight, console-based management system written in C to handle daily hosp
 juigm j
 
 ljbiyfttfvbhjn
+mnbhgvf
