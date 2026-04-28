@@ -23,3 +23,5 @@ A lightweight, console-based management system written in C to handle daily hosp
 3. Data Structures: Custom struct definitions for Doctors, Patients, and Appointments.
 
 4. UI: Interactive Command Line Interface (CLI).
+
+juigm j
