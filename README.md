@@ -25,3 +25,5 @@ A lightweight, console-based management system written in C to handle daily hosp
 4. UI: Interactive Command Line Interface (CLI).
 
 juigm j
+
+ljbiyfttfvbhjn
